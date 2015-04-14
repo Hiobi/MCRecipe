@@ -62,7 +62,7 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 			$itemlist[2] = $itemlist[0] . '.png';
 		}
 		
-		if($itemlist[2][0] == '[') {
+		if($itemlist[2][0] == '[' && $itemlist[2][strlen($itemlist[2])-1] == ']') {
 			$picurl = substr( $itemlist[2], 1, strlen($itemlist[2]) - 2 );
 		} else {
 			$pic = wfFindFile( $itemlist[2] );
@@ -73,7 +73,7 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 			}
 		}
 		
-		if($itemlist[0][0] == '[') {
+		if($itemlist[0][0] == '[' && $itemlist[0][strlen($itemlist[0])-1] == ']') {
 			$linkurl = substr( $itemlist[0], 1, strlen($itemlist[0]) - 2 );
 		} else {
 			$linkurl = Title::newFromText($itemlist[0])->getFullUrl();
@@ -110,6 +110,11 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 	} else {
 		$tojson = $list[min($listnum - 1, 3 + $maxcount)];
 	}
+	
+	$fromjson = preg_replace('/("|\')?(index|number)("|\')?/', "'$2'", $fromjson);
+	$tojson = preg_replace('/("|\')?(index|number)("|\')?/', "'$2'", $tojson);
+	
+	list($type, $datajson, $fromjson, $tojson) = str_replace('"', "'", array($type, $datajson, $fromjson, $tojson));
 
 	$output = "<div class=\"recipe $type\" data=\"{'data':[$datajson],'from':[$fromjson],'to':$tojson}\"></div>";	
 	

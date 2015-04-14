@@ -70,7 +70,7 @@
 
 		$(".craft").each(function() {
 			var item = $(this);
-			var data = eval("(" + item.attr("data") + ")");
+			var data = $.parseJSON(item.attr("data").replace(/'/g, '"'));
 			item.removeAttr("data");
 			for(var i=0; i<9; i++) {
 				var col = i % 3;
@@ -83,7 +83,7 @@
 		
 		$(".smelt").each(function() {
 			var item = $(this);
-			var data = eval("(" + item.attr("data") + ")");
+			var data = $.parseJSON(item.attr("data").replace(/'/g, '"'));
 			item.removeAttr("data");
 			fill_in(item, data, data.from, 50, 16);
 			var result = fill_in(item, data, data.to, 170, 52);
