@@ -27,7 +27,12 @@ $wgResourceModules['ext.mcrecipe'] = array(
 $wgResourceModules['ext.mcrecipe']['scripts'][] = 'js/recipe.js';
 $wgResourceModules['ext.mcrecipe']['styles'][] = 'css/recipe.css';
 
-$supportedMCRecipeType = array('craft', 'craft shapeless', 'smelt');
+$MCRecipeMaxCounts = array();
+$MCRecipeMaxCounts['craft'] = 9;
+$MCRecipeMaxCounts['craft shapeless'] = 9;
+$MCRecipeMaxCounts['smelt'] = 9;
+$MCRecipeMaxCounts['excraft'] = 11;
+$MCRecipeMaxCounts['fudrawing'] = 67;
 
 function addMCRecipeScripts( $out, $skin ) {
 	$out->addModules( 'ext.mcrecipe' );
@@ -40,8 +45,9 @@ function addMCRecipeFunctionHook( &$parser ) {
 }
 
 function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
-	global $supportedMCRecipeType;
-	if(!in_array($type, $supportedMCRecipeType)) {
+	global $MCRecipeMaxCounts;
+
+	if(!isset($MCRecipeMaxCounts[$type])) {
 		return "";
 	}
 
@@ -85,7 +91,7 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 		$isfirst = false;
 	}
 	
-	$maxcount = $type == 'smelt' ? 1 : 9;
+	$maxcount = $MCRecipeMaxCounts[$type];
 
 	$listnum = func_num_args();
 	$list = func_get_args();

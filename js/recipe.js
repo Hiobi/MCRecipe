@@ -26,7 +26,7 @@
 	}
 
 	function isArray(obj) {   
-		return Object.prototype.toString.call(obj) === '[object Array]';    
+		return Object.prototype.toString.call(obj) === '[object Array]' && obj.length > 1;    
 	}
 
 	function tohex(i) {
@@ -85,8 +85,47 @@
 			var item = $(this);
 			var data = $.parseJSON(item.attr("data").replace(/'/g, '"'));
 			item.removeAttr("data");
-			fill_in(item, data, data.from, 50, 16);
+			fill_in(item, data, data.from[0], 50, 16);
 			var result = fill_in(item, data, data.to, 170, 52);
+		});
+		
+		$(".excraft").each(function() {
+			var item = $(this);
+			var data = $.parseJSON(item.attr("data").replace(/'/g, '"'));
+			item.removeAttr("data");
+			for(var i=0; i<9; i++) {
+				var col = i % 3;
+				var row = parseInt(i / 3);
+				var index = data.from[i];
+				var r = fill_in(item, data, index, (col*36+16), (row*36+16));
+			}
+			var r = fill_in(item, data, data.from[9], 148, 42);
+			var r = fill_in(item, data, data.from[10], 184, 42);
+			var result = fill_in(item, data, data.to, 252, 52);
+		});
+		
+		$(".fudrawing").each(function() {
+			var item = $(this);
+			var data = $.parseJSON(item.attr("data").replace(/'/g, '"'));
+			item.removeAttr("data");
+			for(var i=0; i<3; i++) {
+				var index = data.from[i];
+				var r = fill_in(item, data, index, 16, (i*50+20));
+			}
+			var needCount = 0;
+			for(var i=0; i<64; i++) {
+				var col = i % 8;
+				var row = parseInt(i / 8);
+				var index = data.from[i+3];
+				item.append("<div class='box " + (index==-1?"yellow":"red") + "' style='left:" +
+					(104+18*col) + "px;top:" + (16+18*row) + "px'>&nbsp;</div>");
+				if(index != -1) {
+					needCount++;
+				}
+			}
+			needCount = parseInt((needCount + 7) / 8);
+			item.append("<div class='need-count'>" + needCount + "</div>");
+			var result = fill_in(item, data, data.to, 294, 70);
 		});
 		
 		setInterval(function() {
