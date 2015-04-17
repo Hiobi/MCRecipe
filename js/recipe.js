@@ -26,7 +26,7 @@
 	}
 
 	function isArray(obj) {   
-		return Object.prototype.toString.call(obj) === '[object Array]' && obj.length > 1;    
+		return Object.prototype.toString.call(obj) === '[object Array]';
 	}
 
 	function tohex(i) {
