@@ -56,7 +56,7 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 	$isfirst = true;
 	foreach( $datalist as $item ) {
 		$item = trim($item);
-		if($item[0] != '(') {
+		if(strlen($item) == 0 || $item[0] != '(') {
 			continue;
 		}
 		$item = substr( $item, 1 );
