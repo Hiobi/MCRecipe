@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "MCRecipe",
+  "version": "1.1",
+  "author": [    "Hiobi"
+  ],
+  "url": "https://github.com/Hiobi/MCRecipe",
+  "description": "An extension facilitates minecraft recipe rendering for minecraft modders building their wiki.",
+  "license-name": "GPL-2.0-or-later",
+  "type": "parserhook",
+  "requires": {
+    "MediaWiki": ">= 1.29.0"
+  },
+  "Hooks": {
+    "BeforePageDisplay": "MCRecipeHooks::onBeforePageDisplay",
+    "ParserFirstCallInit": "MCRecipeHooks::onParserFirstCallInit"
+  },
+  "ResourceModules": {
+    "ext.mcrecipe": {
+      "scripts": [        "js/recipe.js"
+      ],
+      "styles": [        "css/recipe.css"
+      ],
+      "localBasePath": "",
+      "remoteExtPath": "MCRecipe",
+      "position": "top"
+    }
+  },
+  "ExtensionMessagesFiles": {
+    "MCRecipe": "MCRecipe.i18n.php"
+  },
+  "config": {
+    "MCRecipeMaxCounts": {
+      "craft": 9,
+      "craft shapeless": 9,
+      "smelt": 9,
+      "excraft": 11,
+      "fudrawing": 67
+    }
+  }
+}
