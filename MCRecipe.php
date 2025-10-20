@@ -3,10 +3,10 @@
 $wgExtensionCredits['MCRecipe'][] = array(
     'path' => __FILE__,
     'name' => 'MCRecipe',
-    'author' => 'Herbix', 
-    'url' => 'https://github.com/herbix/MCRecipe', 
+    'author' => 'Hiobi', 
+    'url' => 'https://github.com/Hiobi/MCRecipe', 
     'description' => 'An extension facilitates minecraft recipe rendering for minecraft modders building their wiki.',
-    'version'  => 1.0,
+    'version'  => 1.1,
     'license-name' => "GPL2",
 );
 
@@ -126,3 +126,4 @@ function mcRecipeFunctionHook( $parser, $type = 'craft', $data = '' ) {
 	
 	return array( $output, 'noparse' => true, 'isHTML' => true );
 }
+
